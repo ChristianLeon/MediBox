@@ -48,11 +48,13 @@ export default function MedicationList({
 
       const value = search.toLowerCase();
 
-      return (
-        medication.name.toLowerCase().includes(value) ||
-        medication.purpose.toLowerCase().includes(value) ||
-        item.location.toLowerCase().includes(value)
-      );
+    return (
+  medication.name.toLowerCase().includes(value) ||
+  medication.activeIngredient.toLowerCase().includes(value) ||
+  (medication.strength ?? "").toLowerCase().includes(value) ||
+  medication.purpose.toLowerCase().includes(value) ||
+  item.location.toLowerCase().includes(value)
+);
     })
     .sort(
       (a, b) =>

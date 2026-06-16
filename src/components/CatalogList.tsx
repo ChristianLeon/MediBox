@@ -24,22 +24,24 @@ export default function CatalogList({
   );
 
   const filteredCatalog = useMemo(() => {
-  const value = search.toLowerCase();
+    const value = search.trim().toLowerCase();
 
-  return [...catalog]
-    .filter((item) => {
-      return (
-        item.name.toLowerCase().includes(value) ||
-        item.purpose.toLowerCase().includes(value) ||
-        item.activeIngredient.toLowerCase().includes(value)
-      );
-    })
-    .sort((a, b) =>
-      a.name.localeCompare(b.name, "es", {
-        sensitivity: "base",
+    return [...catalog]
+      .filter((item) => {
+        return (
+          item.name.toLowerCase().includes(value) ||
+          item.activeIngredient.toLowerCase().includes(value) ||
+          (item.strength ?? "").toLowerCase().includes(value) ||
+          item.purpose.toLowerCase().includes(value) ||
+          item.presentation.toLowerCase().includes(value)
+        );
       })
-    );
-}, [catalog, search]);
+      .sort((a, b) =>
+        a.name.localeCompare(b.name, "es", {
+          sensitivity: "base",
+        })
+      );
+  }, [catalog, search]);
 
   const getActiveInventory = (catalogId: string) => {
     return inventory.filter(
@@ -82,7 +84,7 @@ export default function CatalogList({
 
         <input
           type="text"
-          placeholder="Buscar medicamento..."
+          placeholder="Buscar por nombre, sustancia activa o concentración..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="w-full border rounded-lg p-3 mt-3"
@@ -101,10 +103,11 @@ export default function CatalogList({
           >
             <div className="flex justify-between items-start gap-3">
               <div>
-               <h3 className="font-semibold text-lg">
-  💊 {item.name}
-  {item.strength ? ` (${item.strength})` : ""}
-</h3>
+                <h3 className="font-semibold text-lg">💊 {item.name}</h3>
+
+                <p className="text-sm text-blue-600 font-medium mt-1">
+                  {item.strength || "Concentración pendiente"}
+                </p>
 
                 <p className="text-sm text-gray-600 mt-1">
                   {item.purpose || "Uso pendiente de completar"}
