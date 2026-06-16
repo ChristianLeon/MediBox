@@ -45,7 +45,12 @@ export default function CatalogDetailModal({
               {catalogItem.activeIngredient || "Pendiente de completar"}
             </p>
           </div>
-
+<div>
+  <p className="text-sm text-gray-500">Concentración</p>
+  <p className="font-medium">
+    {catalogItem.strength || "Pendiente de completar"}
+  </p>
+</div>
           <div>
             <p className="text-sm text-gray-500">¿Para qué sirve?</p>
             <p className="font-medium">

@@ -101,7 +101,10 @@ export default function CatalogList({
           >
             <div className="flex justify-between items-start gap-3">
               <div>
-                <h3 className="font-semibold text-lg">💊 {item.name}</h3>
+               <h3 className="font-semibold text-lg">
+  💊 {item.name}
+  {item.strength ? ` (${item.strength})` : ""}
+</h3>
 
                 <p className="text-sm text-gray-600 mt-1">
                   {item.purpose || "Uso pendiente de completar"}

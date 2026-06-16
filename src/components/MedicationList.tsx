@@ -94,7 +94,10 @@ export default function MedicationList({
           <div key={item.id} className="bg-white rounded-xl shadow p-4">
             <div className="flex justify-between items-start gap-3">
               <div>
-                <h3 className="font-semibold text-lg">{medication.name}</h3>
+                <h3 className="font-semibold text-lg">
+  {medication.name}
+  {medication.strength ? ` (${medication.strength})` : ""}
+</h3>
 
                 <p className="text-sm text-gray-600">
                   {medication.purpose ||
