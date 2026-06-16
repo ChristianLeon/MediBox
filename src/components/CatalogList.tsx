@@ -24,16 +24,22 @@ export default function CatalogList({
   );
 
   const filteredCatalog = useMemo(() => {
-    return catalog.filter((item) => {
-      const value = search.toLowerCase();
+  const value = search.toLowerCase();
 
+  return [...catalog]
+    .filter((item) => {
       return (
         item.name.toLowerCase().includes(value) ||
         item.purpose.toLowerCase().includes(value) ||
         item.activeIngredient.toLowerCase().includes(value)
       );
-    });
-  }, [catalog, search]);
+    })
+    .sort((a, b) =>
+      a.name.localeCompare(b.name, "es", {
+        sensitivity: "base",
+      })
+    );
+}, [catalog, search]);
 
   const getActiveInventory = (catalogId: string) => {
     return inventory.filter(
