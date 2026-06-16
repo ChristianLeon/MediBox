@@ -8,7 +8,8 @@ interface Props {
     purpose: string,
     expirationDate: string,
     quantity: number,
-    location: string
+    location: string,
+    strength: string
   ) => void;
 }
 
@@ -17,6 +18,7 @@ export default function MedicationForm({ catalog, onAddMedication }: Props) {
   const [expirationDate, setExpirationDate] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [location, setLocation] = useState("Baño");
+  const [strength, setStrength] = useState("");
   const [selectedCatalogId, setSelectedCatalogId] = useState<string | null>(
     null
   );
@@ -40,6 +42,7 @@ export default function MedicationForm({ catalog, onAddMedication }: Props) {
 
   const clearForm = () => {
     setName("");
+    setStrength("");
     setExpirationDate("");
     setQuantity(1);
     setSelectedCatalogId(null);
@@ -51,13 +54,22 @@ export default function MedicationForm({ catalog, onAddMedication }: Props) {
 
   const handleSelectSuggestion = (item: MedicationCatalogItem) => {
     setName(item.name);
+    setStrength(item.strength ?? "");
     setSelectedCatalogId(item.id);
   };
 
   const handleSave = () => {
     if (!name.trim()) return;
 
-    onAddMedication(name.trim(), "", expirationDate, quantity, location);
+    onAddMedication(
+      name.trim(),
+      "",
+      expirationDate,
+      quantity,
+      location,
+      strength.trim()
+    );
+
     clearForm();
   };
 
@@ -102,7 +114,10 @@ export default function MedicationForm({ catalog, onAddMedication }: Props) {
                   <span className="text-xl">💊</span>
 
                   <div>
-                    <p className="font-medium">{item.name}</p>
+                    <p className="font-medium">
+                      {item.name}
+                      {item.strength ? ` (${item.strength})` : ""}
+                    </p>
                     <p className="text-xs text-gray-500">
                       {item.purpose || "Uso pendiente de completar"}
                     </p>
@@ -126,6 +141,20 @@ export default function MedicationForm({ catalog, onAddMedication }: Props) {
               : "➕ Medicamento nuevo. Se creará en catálogo automáticamente."}
           </div>
         )}
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium mb-1">
+          Concentración
+        </label>
+
+        <input
+          type="text"
+          value={strength}
+          onChange={(e) => setStrength(e.target.value)}
+          placeholder="Ej. 500 mg, 600 mg, 120 mg/5 mL"
+          className="w-full border rounded-lg p-3"
+        />
       </div>
 
       <div>

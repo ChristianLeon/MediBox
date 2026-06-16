@@ -9,18 +9,18 @@ export interface MedicationCatalogItem {
   updatedAt: string;
 }
 
-export interface MedicationInventoryItem {
+export interface MedicationCatalogItem {
   id: string;
-  catalogId: string;
-  quantity: number;
-  location: string;
-  expirationDate: string;
-  status: "active" | "removed";
-  removedAt?: string;
-  removalReason?: string;
+  name: string;
+  activeIngredient: string;
+  strength: string; // NUEVO
+  purpose: string;
+  presentation: string;
+  notes: string;
   createdAt: string;
   updatedAt: string;
 }
+
 
 export interface MedicationData {
   catalog: MedicationCatalogItem[];

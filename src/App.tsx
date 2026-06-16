@@ -94,12 +94,13 @@ function App() {
   };
 
   const addMedication = (
-    name: string,
-    purpose: string,
-    expirationDate: string,
-    quantity: number,
-    location: string
-  ) => {
+  name: string,
+  purpose: string,
+  expirationDate: string,
+  quantity: number,
+  location: string,
+  strength: string
+) => {
     const now = new Date().toISOString();
 
     let catalogItem = data.catalog.find(
@@ -109,16 +110,17 @@ function App() {
     if (!catalogItem) {
       const knowledge = findMedicationKnowledge(name);
 
-      catalogItem = {
-        id: crypto.randomUUID(),
-        name,
-        activeIngredient: knowledge?.activeIngredient ?? "",
-        purpose: knowledge?.purpose ?? purpose,
-        presentation: knowledge?.presentation ?? "",
-        notes: knowledge?.notes ?? "",
-        createdAt: now,
-        updatedAt: now,
-      } satisfies MedicationCatalogItem;
+     catalogItem = {
+  id: crypto.randomUUID(),
+  name,
+  activeIngredient: knowledge?.activeIngredient ?? "",
+  strength: strength || knowledge?.strength || "",
+  purpose: knowledge?.purpose ?? purpose,
+  presentation: knowledge?.presentation ?? "",
+  notes: knowledge?.notes ?? "",
+  createdAt: now,
+  updatedAt: now,
+} satisfies MedicationCatalogItem;
     }
 
     const inventoryItem: MedicationInventoryItem = {
